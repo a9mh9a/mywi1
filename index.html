@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إلى حبيبة عمري بنون 👑</title>
+    
+    <!-- مكتبات الخطوط والأنيميشن -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&family=Marhey&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #ff0a54;
+            --secondary: #ff477e;
+            --bg-gradient: linear-gradient(135deg, #f9f9f9 0%, #ffc4d6 50%, #ff99ac 100%);
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #590d22;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            overflow: hidden; /* يمنع تحرك الصفحة كاملة */
+            color: var(--text-main);
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="%23ff0a54"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto;
+        }
+
+        /* خلفية متحركة */
+        .bg-animation {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-size: 400% 400%; animation: gradientBG 15s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+
+        /* الكارت الزجاجي */
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border);
+            border-radius: 25px; padding: 1.5rem; width: 90%; max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); text-align: center;
+            transform: translateY(20px); opacity: 0; transition: all 0.6s ease;
+            max-height: 90vh; /* حتى لا يخرج الكارت عن الشاشة */
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        .page {
+            display: none; height: 100vh; width: 100%;
+            flex-direction: column; justify-content: center; align-items: center;
+            position: absolute; top: 0; left: 0;
+        }
+        .page.active { display: flex; }
+        .page.active .glass-card { transform: translateY(0); opacity: 1; }
+
+        h1, h2 { font-family: 'Marhey', cursive; color: #a4133c; margin-bottom: 1rem; }
+
+        /* الأزرار */
+        .btn {
+            background: linear-gradient(45deg, #ff0a54, #ff477e); color: white; border: none;
+            padding: 12px 35px; font-size: 1.1rem; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 10, 84, 0.4); transition: 0.3s;
+            font-family: 'Tajawal', sans-serif; margin: 10px;
+            flex-shrink: 0; /* يمنع الزر من الانكماش */
+        }
+        .btn:hover { transform: scale(1.05) translateY(-3px); }
+
+        /* حقول الإدخال */
+        input[type="password"] {
+            padding: 12px; border-radius: 15px; border: 2px solid #ffccd5;
+            width: 80%; text-align: center; font-size: 1.2rem; margin-bottom: 15px;
+            outline: none; background: rgba(255,255,255,0.9);
+        }
+
+        /* مشغل الموسيقى */
+        .music-player {
+            position: fixed; bottom: 20px; left: 20px; z-index: 100;
+            width: 50px; height: 50px; background: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer; border: 2px solid var(--secondary);
+            animation: pulse 2s infinite;
+        }
+        .playing .music-disc { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(255, 71, 126, 0.7);} 70% {box-shadow: 0 0 0 10px rgba(255, 71, 126, 0);} 100% {box-shadow: 0 0 0 0 rgba(255, 71, 126, 0);} }
+
+        /* شبكة الأيام */
+        .days-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
+        .day-box {
+            background: white; padding: 10px; border-radius: 10px; cursor: pointer;
+            border: 1px solid #ffe5ec; transition: 0.3s; font-size: 0.9rem;
+        }
+        .day-box:hover { background: #ffe5ec; color: var(--primary); }
+        .day-box.correct { background: #caffbf; border-color: #b7e4c7; }
+        .day-box.wrong { background: #ffccd5; animation: shakeX 0.5s; }
+
+        /* السلايدر */
+        .swiper {
+            width: 100%;
+            height: 400px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .swiper-slide {
+            background-color: #fff;
+            width: 260px;
+            height: 350px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 5px solid white;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 85%;
+            object-fit: contain;
+            background-color: #f8f8f8;
+        }
+        .caption {
+            height: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.9rem;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        /* الطباعة (تم التعديل هنا) */
+        .timer-display { display: flex; justify-content: center; gap: 10px; margin: 15px 0; font-family: 'Courier New', monospace; font-weight: bold; }
+        
+        .typewriter {
+            text-align: right; 
+            width: 100%;
+            /* تحديد ارتفاع ثابت للمربع */
+            height: 300px; /* ارتفاع ثابت */
+            max-height: 50vh; /* لا يتجاوز نصف الشاشة */
+            overflow-y: auto; /* يسمح بالسكرول داخل المربع فقط */
+            
+            font-size: 1rem; 
+            line-height: 1.8;
+            background: rgba(255,255,255,0.8); /* زيادة التعتيم للقراءة */
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-bottom: 20px;
+            white-space: pre-line;
+            border: 2px solid #fff;
+            scroll-behavior: smooth;
+        }
+        
+        /* شكل شريط السكرول ليصبح جميلاً */
+        .typewriter::-webkit-scrollbar { width: 8px; }
+        .typewriter::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); border-radius: 10px; }
+        .typewriter::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
+
+        .cursor { display: inline-block; width: 2px; background-color: var(--primary); animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+    
+    <audio id="bgMusic" loop>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-player" onclick="toggleMusic()">
+        <i class="fas fa-music music-disc"></i>
+    </div>
+
+    <!-- الصفحة 0: القفل -->
+    <div id="page0" class="page active">
+        <div class="glass-card animate__animated animate__zoomIn">
+            <i class="fas fa-heart-lock fa-3x" style="color: var(--primary); margin-bottom: 20px;"></i>
+            <h2>منطقة حب محظورة 🚫</h2>
+            <p>أدخلي سنة ميلادكِ يا أجمل أميرة</p>
+            <input type="password" id="passcode" placeholder="****">
+            <br>
+            <button class="btn" onclick="checkPass()">افتحي قلبي 🔓</button>
+            <p id="errorMsg" style="color:red; display:none; margin-top:10px;">أنتي مو بنين الحقيقية 😑</p>
+        </div>
+    </div>
+
+    <!-- الصفحة 1: الترحيب -->
+    <div id="page1" class="page">
+        <div class="glass-card">
+            <div style="font-size: 4rem; margin-bottom: 10px;">👑</div>
+            <h1>هلا بروحي وسندي</h1>
+            <p>هل أنتِ بنين سارقة قلبي ومجرمة الحب؟</p>
+            <div style="position: relative; height: 100px; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <button class="btn" onclick="nextPage(2)">❤️ نعم، أعترف</button>
+                <button class="btn runaway-btn" id="noBtn" onmouseover="moveButton()">لا، أنا بريئة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الصفحة 2: الاختبار -->
+    <div id="page2" class="page">
+        <div class="glass-card">
+            <h2>اختبار العشاق 📝</h2>
+            <p>شنو هو اليوم "المقدس" عندي؟</p>
+            <div class="days-grid">
+                <div class="day-box" onclick="checkDay(this, false)">السبت</div>
+                <div class="day-box" onclick="checkDay(this, false)">الأحد</div>
+                <div class="day-box" onclick="checkDay(this, false)">الاثنين</div>
+                <div class="day-box" onclick="checkDay(this, false)">الثلاثاء</div>
+                <div class="day-box" onclick="checkDay(this, true)">الأربعاء</div>
+                <div class="day-box" onclick="checkDay(this, false)">الخميس</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الصفحة 3: الذكاء الاصطناعي -->
+    <div id="page3" class="page">
+        <div class="glass-card">
+            <i class="fas fa-robot fa-2x" style="color: #333; margin-bottom: 10px;"></i>
+            <h2>تحليل المشاعر 🤖</h2>
+            <div style="background: white; padding: 15px; border-radius: 15px; text-align: right; font-size: 0.95rem; margin-bottom: 20px;">
+                "جاري فحص بيانات 'حسين'... <br>
+                - نسبة الحب: لا نهائية ∞ <br>
+                - حالة القلب: ينبض فقط لـ بنين."
+            </div>
+            <button class="btn" onclick="nextPage(4)">أحبك حسوني</button>
+        </div>
+    </div>
+
+    <!-- الصفحة 4: الرسالة (المعدلة) -->
+    <div id="page4" class="page">
+        <div class="glass-card">
+            <h2>من الوريد للوريد 💌</h2>
+            <!-- تم تعديل الكلاس ليكون قابل للسكرول -->
+            <div class="typewriter" id="typingArea"></div>
+            <!-- الزر الآن ثابت بالأسفل ولن يختفي -->
+            <button class="btn" onclick="nextPage(5)">نشوف ذكرياتنا؟ 📸</button>
+        </div>
+    </div>
+
+    <!-- الصفحة 5: الذكريات -->
+    <div id="page5" class="page">
+        <div class="glass-card" style="width: 95%; max-width: 600px;">
+            <h2 style="font-family: 'Great Vibes', cursive; font-size: 2rem;">Our Memories ❤️</h2>
+            
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-36-13.png" alt="1"><div class="caption">معكِ تكتملُ روحي</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-36-34.png" alt="2"><div class="caption">عيناكِ وطني الأجمل.</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-36-48.png" alt="3"><div class="caption">أعشقُ تفاصيلكِ كلها</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-37-05.png" alt="4"><div class="caption">دمتِ لي عمراً</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-37-23.png" alt="5"><div class="caption">ضحكتكِ علاجُ روحي</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-37-33.png" alt="6"><div class="caption">أنتِ العوضُ الجميل</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-39-28.png" alt="7"><div class="caption">أنتِ دعوةُ أيامي</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-41-14.png" alt="8"><div class="caption">حبكِ يسكنُ وريدي</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-41-23.png" alt="9"><div class="caption">أنتِ نبضُ قلبي </div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-41-33.png" alt="10"><div class="caption">أحبكِ فوقَ الوصف</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-41-41.png" alt="11"><div class="caption">أنتِ أجملُ أقداري</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-41-53.png" alt="12"><div class="caption">وجودكِ هو الحياة</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-42-02.png" alt="13"><div class="caption">قلبي معقودٌ بقلبكِ</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-42-12.png" alt="14"><div class="caption">لا حياةَ دونكِ</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-42-22.png" alt="15"><div class="caption">أنتِ فرحةُ عمري</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-42-30.png" alt="16"><div class="caption">كفاني اللهُ بكِ</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-42-22.png" alt="17"><div class="caption">أنتِ أماني الوحيد</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-48-44.png" alt="18"><div class="caption"> سأحبكِ حتى المشيب</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-48-55.png" alt="19"><div class="caption"> وجهكِ صباحي المشرق</div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-49-07.png" alt="20"><div class="caption">أنتِ اختصارُ السعادة </div></div>
+                    <div class="swiper-slide"><img src="images/photo_2026-02-13_09-49-30.png" alt="21"><div class="caption">نور عيوني  </div></div>
+                    <div class="swiper-slide"><img src="images/Screenshot 2026-02-13 093903.png" alt="22"><div class="caption">روح الروح</div></div>
+                    <div class="swiper-slide"><img src="images/Screenshot 2026-02-13 094256.png" alt="النهاية"><div class="caption">أحبج للابد ❤️</div></div>
+                </div>
+            </div>
+
+            <div class="timer-display" id="timer">Loading...</div>
+            <p style="font-weight: bold; font-size: 1.1rem; margin-top: 10px;">تقبلين تكملين الطريق وياي؟ 💍</p>
+            <button class="btn" onclick="finalCelebrate()">💙 أكيد، أنت روحي</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const CONFIG = {
+            passcode: "2004", 
+            startDate: new Date("2023-01-01T00:00:00"), 
+            loveMessage: `إلى شريكة روحي، ورفيقة دربي، وملاذ قلبي..
+يا من اختصرتِ في عينيكِ كلَّ نساء الأرض، وجمعتِ في قلبكِ كلَّ معاني الرحمة والسكن. أكتبُ إليكِ اليوم، لا لأخبركِ أني أحبكِ، فهذا أمرٌ باتت تعرفه جدرانُ بيتنا، وتسمعهُ نبضاتُ قلبي، وتشهدُ عليه سنواتنا معاً.. بل أكتبُ لأقول لكِ: شكراً لأنكِ أنتِ.
+
+يا زوجتي الغالية..
+لقد كنتِ دائماً الضلعَ الثابتَ الذي لا يميلُ حين يميلُ العالم كله من حولي. كنتِ البيتَ الذي آوي إليه حين تضيقُ بي الأماكن، والسكنَ الذي أرتاحُ فيه من عناءِ الحياة.
+
+ويا حبيبتي الأبدية..
+لم يزدني مرورُ الأيامِ إلا غرقاً في تفاصيلك. كلُّ تجعيدةٍ صغيرة قد يرسمها الزمن، وكلُّ خصلةِ شعر، هي عندي تاريخٌ من الحب، وشاهدٌ على حكايتنا التي لا أريدُ لها نهاية. حبكِ هو الزادُ الذي أقتاتُ عليه لأكملَ الطريق، ونورُ وجهكِ هو الصباحُ الذي أنتظرهُ كلَّ يوم.
+
+ويا صديقتي الصادقة..
+أنتِ هو اللقبُ الأحبُ إلى قلبي. أنتِ الوحيدةُ التي أستطيعُ أن أكونَ أمامها "أنا" بتجرد، دون أقنعةٍ أو تجميل. أنتِ بئرُ أسراري، ومرآةُ روحي، والوحيدةُ التي تفهمُ صمتي قبل كلامي، وتقرأُ تعبي قبل أن أشتكي. الحديثُ معكِ هو نزهةُ عقلي، والضحكُ معكِ هو علاجُ همومي.
+
+أعترفُ لكِ.. أنني لولاكِ لكنتُ تائهاً. أنتِ البوصلةُ حين أضيع، والهدوءُ حين أغضب، والرحمةُ التي أرسلها الله لتمسحَ على قلبي.
+
+أعدكِ يا نبضَ فؤادي..
+أن أظلَّ لكِ الزوجَ المحب، والحبيبَ المتيّم، والصديقَ الوفي. أعدكِ أن أحفظَ هذا العهدَ ما دامت الروحُ في الجسد، وأن تظلَّ يدكِ في يدي حتى المشيب، وحتى آخرِ نفس.
+
+أحبكِ.. يا كلَّ كوني.
+زوجك، وحبيبك، وصديقك ❤️`
+        };
+
+        let currentPage = 0;
+        const music = document.getElementById('bgMusic');
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            const player = document.querySelector('.music-player');
+            const icon = document.querySelector('.music-disc');
+            
+            if (isMusicPlaying) {
+                music.pause();
+                player.classList.remove('playing');
+                icon.classList.remove('fa-compact-disc');
+                icon.classList.add('fa-play');
+            } else {
+                music.play()
+                .then(() => {
+                    player.classList.add('playing');
+                    icon.classList.add('fa-compact-disc');
+                    icon.classList.remove('fa-play');
+                    isMusicPlaying = true;
+                })
+                .catch(error => {
+                    console.log("Auto-play prevented");
+                    alert("اضغطي 'موافق' لتشغيل الموسيقى 🎵");
+                    music.play();
+                    isMusicPlaying = true;
+                    player.classList.add('playing');
+                });
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        function checkPass() {
+            const input = document.getElementById('passcode').value;
+            if (input === CONFIG.passcode) {
+                music.play().then(() => {
+                    isMusicPlaying = true;
+                    document.querySelector('.music-player').classList.add('playing');
+                }).catch(() => console.log("Music waiting for interaction"));
+                
+                nextPage(1);
+            } else {
+                const msg = document.getElementById('errorMsg');
+                msg.style.display = 'block';
+                msg.classList.add('animate__animated', 'animate__shakeX');
+            }
+        }
+
+        function nextPage(pageIndex) {
+            document.querySelector(`#page${currentPage}`).classList.remove('active');
+            currentPage = pageIndex;
+            const nextPage = document.querySelector(`#page${currentPage}`);
+            nextPage.classList.add('active');
+            
+            const card = nextPage.querySelector('.glass-card');
+            card.classList.remove('animate__zoomIn');
+            void card.offsetWidth;
+            card.classList.add('animate__animated', 'animate__zoomIn');
+
+            if (pageIndex === 4) startTypewriter();
+            if (pageIndex === 5) initSwiper();
+        }
+
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function checkDay(element, isCorrect) {
+            if (isCorrect) {
+                element.classList.add('correct');
+                confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+                setTimeout(() => nextPage(3), 1000);
+            } else {
+                element.classList.add('wrong');
+                Swal.fire({
+                    icon: 'error', title: 'خطأ! 😱', text: 'بنين الحقيقية ما تغلط بهذا اليوم!', confirmButtonColor: '#ff0a54'
+                });
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        }
+
+        function startTypewriter() {
+            const el = document.getElementById('typingArea');
+            el.innerHTML = '';
+            let i = 0;
+            const text = CONFIG.loveMessage;
+            const speed = 30; 
+            
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i);
+                    // هذا السطر يجعل السكرول ينزل للأسفل تلقائياً مع الكتابة
+                    el.scrollTop = el.scrollHeight; 
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    el.innerHTML += '<span class="cursor">|</span>';
+                }
+            }
+            type();
+        }
+
+        function initSwiper() {
+            new Swiper(".mySwiper", {
+                effect: "cards",
+                grabCursor: true,
+                initialSlide: 0,
+                cardsEffect: {
+                    perSlideOffset: 8,
+                    perSlideRotate: 2,
+                    slideShadows: false, 
+                },
+            });
+
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - CONFIG.startDate;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                document.getElementById('timer').innerHTML = `
+                    <div class="time-unit">${days} يوم</div>
+                    <div class="time-unit">${hours} ساعة</div>
+                    <div class="time-unit">${minutes} دقيقة</div>
+                `;
+            }, 1000);
+        }
+
+        function finalCelebrate() {
+            const end = Date.now() + 5 * 1000;
+            const colors = ['#ff0a54', '#ff477e', '#ffffff'];
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: colors });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: colors });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+
+            Swal.fire({
+                title: 'كل يوم وانتِ اول واخر حب بحياتي ❤️',
+                text: 'أحبج يا أحلى نصيب',
+                imageUrl: 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif',
+                imageWidth: 200,
+                confirmButtonText: 'إلى الأبد ♾️',
+                confirmButtonColor: '#ff0a54'
+            });
+        }
+    </script>
+</body>
+</html>
